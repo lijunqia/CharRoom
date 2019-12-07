@@ -214,7 +214,7 @@ class Swoole extends Command {
 
     protected $serv        = null;
     protected $swoole_ip   = "0.0.0.0";
-    protected $swoole_port = 9654;
+    protected $swoole_port = 9001;
 
     protected $count_down_tick = 2;
 

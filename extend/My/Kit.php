@@ -198,7 +198,7 @@ class Kit {
         //todo https://wiki.swoole.com/wiki/page/185.html
         //swoole_async_writefile($filename, $string, null, $opt);
 
-        chown($filename,'apache');
+        chown($filename,'www');
     }
 
     public static function getConfig($filename='') {
