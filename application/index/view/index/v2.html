@@ -1,7 +1,12 @@
+
 <!doctype html>
 <html lang="zh">
 <head>
     <meta charset="utf-8" />
+    <meta name="baidu-site-verification" content="YlH27qf1M1" />
+    <title>农码一生聊天室 | 一个高性能的PHP 聊天室</title>
+    <meta name="keywords" content="php聊天室,php websocket聊天室">
+    <meta name="description" content="农码一生 提供的基于PHP websocket开发的支持分布式部署的聊天室，支持群聊和私聊">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -19,20 +24,31 @@
     <meta name="x5-fullscreen" content="true">
     <meta name="x5-page-mode" content="app">
     <base target="_blank">
-    <title>聊天系统</title>
-    <link id="favicon" href="/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link rel="stylesheet" href="/css/v2.css" />
-    <link rel="stylesheet" href="/css/layui.css" />
+    <link id="favicon" href="http://chatroom.ivisionsky.com/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="http://chatroom.ivisionsky.com/css/v2.css" />
+    <link rel="stylesheet" href="http://chatroom.ivisionsky.com/css/layui.css" />
     <style>
         body {
             background-image:url(http://www.pptbz.com/d/file/p/201708/d772b112118b5a8f5e94eeae2cda39ba.jpg);
             background-repeat:no-repeat;
             background-attachment:fixed
         }
+
+
+        @keyframes round {
+            25% {
+                opacity: 1;
+            }
+            40% {
+                opacity: 0;
+            }
+        }
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/layer/2.3/layer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
 </head>
 <body>
 <img class="abs cover body-bg" width="100%" height="100%">
@@ -86,18 +102,15 @@
             </div>
             <div class="abs right pnl-right">
                 <div class="slider-container" style="height: 16.25em;">
-                    <ul class="slider">
-                        <li style="height: 16.25em;">
-                            <img style="width: 100%;height: 100%" src="/img/qun.png">
-                        </li>
-                    </ul>
+                    <img class='photo animate_2' style="width: 99%;height: 99%" src="http://chatroom.ivisionsky.com/img/qun.jpg">
                 </div>
+
                 <div class="pnl-right-content" style="top:16.35em;">
                     <div class="pnl-tabs">
                         <div class="tab-btn active" id="hot-tab">常见问题</div>
                         <div class="tab-btn" id="rel-tab">在线骚年(<span class="online_users">0</span>)</div>
                     </div>
-                    <div class="pnl-hot">
+                    <div class="pnl-hot" style="display: block;">
                         <ul class="rel-list unselect" id="hots">
                             <li class="rel-item">
                                 <a href="javascript:void(0);" onclick="return false;" class="admin_info">有无核心组成员QQ联系方式</a>
@@ -117,6 +130,14 @@
                             <li class="rel-item">
                                 <a href="javascript:void(0)"  onclick="return false;" class="join">PHP基础不好可以加群吗？</a>
                             </li>
+                            <li class="rel-item">
+                                <a href="javascript:void(0)"  onclick="return false;" class="golang">GoLang新重构聊天室地址</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pnl-rel" style="display: none;">
+                        <ul class="rel-list unselect" id="rels">
+                            <!-- <li class="rel-item" title="Who am i">我是谁</li>-->
                         </ul>
                     </div>
                 </div>
@@ -259,23 +280,25 @@
                         ,shade: 0.01
                     });
 
-                   setTimeout(function () {
-                       var arr = {
-                           code:10,
-                           msg: '登陆' ,
-                           sessid : $.cookie('sessid'),
-                           md5:  $.cookie('md5'),
-                           nick: $.cookie('nick'),
-                           icon: $.cookie('icon')
-                       };
-                       ws.send( JSON.stringify(arr));
-                   },1200)
+                    setTimeout(function () {
+                        var arr = {
+                            code:10,
+                            msg: '登陆' ,
+                            sessid : $.cookie('sessid'),
+                            md5:  $.cookie('md5'),
+                            nick: $.cookie('nick'),
+                            icon: $.cookie('icon')
+                        };
+                        ws.send( JSON.stringify(arr));
+                    },1200)
                 } else if(status == 10) {
-                    $('#msgs').append('<div class="msg min time" id="histStart">'+data.data.msg+'</div>')
+                    $('#msgs').append('<div class="msg min time" id="histStart">'+data.data.msg+'</div>');
+                    $("#rel-tab").click();
                 } else if(status == 20) {
                     $('.online_users').text(data.data.online);
                     if(typeof(data.data.msg) != "undefined" && (data.data.msg != "")) {
-                        $('#msgs').append('<div class="msg min time" id="histStart">'+data.data.msg+'</div>')
+                        $('#msgs').append('<div class="msg min time" id="histStart">'+data.data.msg+'</div>');
+                        $("#rel-tab").click();
                     }
                 } else {
                     if(status==1) {
@@ -344,7 +367,7 @@
         });
 
         $('#sendMsg').click(function(){
-            var msg = $('#TalkMSG').val();
+            var msg = $('#TalkMSG').val().trim();
             if(msg ==''){
                 layer.alert('不能发送空消息');
             } else {
@@ -404,6 +427,15 @@
             layer.load(1);
             setTimeout(function () {
                 var arr = {code:16, msg: 'question' ,sessid: $.cookie('sessid'),md5:$.cookie('md5')};
+                ws.send( JSON.stringify(arr));
+                layer.closeAll('loading');
+            },1200);
+        });
+
+        $('.golang').click(function(){
+            layer.load(1);
+            setTimeout(function () {
+                var arr = {code:17, msg: 'golang' ,sessid: $.cookie('sessid'),md5:$.cookie('md5')};
                 ws.send( JSON.stringify(arr));
                 layer.closeAll('loading');
             },1200);
@@ -483,6 +515,55 @@
                     ]
                 }
             });
+        })
+
+        $("#hot-tab").click(function () {
+            $(this).addClass('active');
+            $(".pnl-hot").show();
+            $(".pnl-rel").hide();
+            $("#rel-tab").removeClass('active');
+        });
+
+        $("#rel-tab").click(function () {
+            $(this).addClass('active');
+            $(".pnl-hot").hide();
+            $(".pnl-rel").show();
+            $("#hot-tab").removeClass('active');
+            $.ajax({
+                url:"/index/index/online",
+                type:"post",
+                data:null,
+                processData: false, // 告诉jQuery不要去处理发送的数据
+                contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+                success:function(res){
+                    if(res.status == -1) {
+                        layer.alert(res.msg)
+                    } else {
+                        var li = "";
+                        var self_fd = parseInt($('#fd').val());
+                        $.each(res.data,function (i,v) {
+                            if(self_fd == parseInt(v.fd)) {
+                                var color = '#1E9FFF'
+                            } else {
+                                var color = '#cdcfcf'
+                            }
+                            var nick = v.nick
+                            if( v.nick.length > 12) {
+                                nick = v.nick.slice(0,12) + "...";
+                            }
+
+                            li += '<li class="rel-item" title="'+v.nick+'" style="background-color: '+color+' ;overflow: hidden">';
+                            li += '   <img src="'+v.icon+'" style="float: left;width: 35px;height: 35px;border: 1px solid #6fbff0" />'
+                            li += '   <p style="float: left;line-height: 35px;margin-left: 10px">'+nick+'</p>'
+                            li += '</li>'
+                            li += '<div style="clear: both"></div>'
+                        });
+
+                        $(".pnl-rel .rel-list").empty().append(li);
+                    }
+                },
+                dataType:"json"
+            })
         })
 
         ;(function () {
