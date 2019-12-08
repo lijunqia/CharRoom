@@ -100,7 +100,7 @@ class PlayerLog extends Model{
 
 	public function selectUsers() {
 		try {
-			$sql    = "SELECT * FROM `t_modify_uinfo` WHERE  `status`=1 ORDER BY `id` DESC LIMIT 100";
+			$sql    = "SELECT * FROM `t_modify_uinfo` WHERE add_time>".(time()-3600*24)." ORDER BY `id` DESC LIMIT 100";
 			$result = self::query($sql);
 			$aData  = array_pop($result);
 			return [!empty($aData),$aData];
