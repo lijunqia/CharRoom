@@ -3,3 +3,4 @@ composer.lock
 *.log
 runtime
 /runtime
+/application/config/extra/db.php
