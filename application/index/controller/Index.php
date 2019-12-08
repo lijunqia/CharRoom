@@ -23,7 +23,7 @@ class Index extends Controller {
     public function index() {
 		$request = Request::instance();
 		$sessid=$request->param('sessid');
-        Swoole::getSessid($sessid);
+		$sessid=Swoole::getSessid($sessid);
         $msg = json_encode([
             'msg'=>"【用户登陆】|CLASS:".__CLASS__."|Func:".__FUNCTION__,
             'fd'=>0,
@@ -31,6 +31,7 @@ class Index extends Controller {
         ]);
         asyncTask::LogToDb(null, null, null, $msg);
         $view = new View();
+        $view->assign('sessid',$sessid);
         return $view->fetch('v2');
     }
 
