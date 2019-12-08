@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PHP研究院</title>
+    <title>聊天系统</title>
     <style>
         /**重置标签默认样式*/
         * {
@@ -148,20 +148,15 @@
 <body>
 <div class="header" style="opacity:0.8;">
         <span>
-            基于PHP7+Swoole+Redis+Mysql实现的实时聊天系统
+            聊天系统
         </span>
-    <span style="float: right;">
-        助飞PHP、让PHPer不再建站搬砖
-    </span>
+
 </div>
-<a href="https://github.com/lyxlk/CharRoom" target="_blank">
-    <img style="position: absolute; top: 40px; left: 0; border: 0;width: 150px;height: 150px;" src="http://chatroom.ivisionsky.com/img/forkme.png" alt="Fork me on GitHub">
-</a>
+
 
 <div id="container">
     <div class="header">
         <span style="float: left;">
-            Q群【 <b style="color: #ff0000">200979897</b> 】
         </span>
         <span style="float: right;" class="time"></span>
     </div>
@@ -177,7 +172,7 @@
     <input id="fd" value="0" style="display: none;">
 
     <div class="pm">
-        <img style="width: 200px;height: 200px" src="/img/qun.png">
+        <img style="width: 200px;height: 200px" src="/img/xgp.jpg">
     </div>
 
     <div class="shake">
@@ -219,7 +214,7 @@
         var link =  function  () {
             ws = new WebSocket("ws://chat.yl116.com:9001");//连接服务器
             ws.onopen = function(event){
-                alert('骚年你来啦~~~加群一起浪吧');
+                alert('你来啦~~~一起浪吧');
             };
             ws.onmessage = function (event) {
                 var self_fd = parseInt($('#fd').val());
@@ -250,7 +245,7 @@
             };
 
             ws.onerror = function(event){
-                alert("WebSocket异常！");
+                alert("登录异常！");
             };
         };
 

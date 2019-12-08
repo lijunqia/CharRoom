@@ -574,7 +574,7 @@ class Swoole extends Command {
                         $user    = json_decode($userStr,true);
 
                         if(empty($user)) {
-                            $icon  = empty($data['icon']) ? self::getIconByFd($frame->fd) : "http://chatroom.ivisionsky.com/{$data['icon']}";
+                            $icon  = empty($data['icon']) ? self::getIconByFd($frame->fd) : "/{$data['icon']}";
                             $nick  = empty($data['nick']) ? Randomname::createName() : $data['nick'];
                             $user  = [
                                 'nick' => $nick,
@@ -608,7 +608,6 @@ class Swoole extends Command {
                         $html = " 【拍黄片爱好者】: 77795772 <br/>";
                         $html .= "【82年的老套路】: 1311552030<br/>";
                         $html .= "【Clarence】: 851133067<br/>";
-                        $html .= "【php城管】: 961627404";
 
                         return $serv->push($frame->fd,Kit::json_response(1,'ok',[
                             'msg'  =>'核心组成详细信息：<br />' . $html,
