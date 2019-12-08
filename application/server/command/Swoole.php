@@ -463,8 +463,8 @@ class Swoole extends Command {
 		$sessidAndFd = Model_Keys::sessidAndFd();
 		$user = [];
 		foreach($serv->connections as $_fd) {
-			$user = $redis->hget($sessidAndFd,$_fd);
-			$user[] = $user;
+			$ret = $redis->hget($sessidAndFd,$_fd);
+			$user[] = $ret;
 		}
 		return  $user;
 	}
