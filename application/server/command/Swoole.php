@@ -596,7 +596,7 @@ class Swoole extends Command {
                         $user    = json_decode($userStr,true);
 
                         if(empty($user)) {
-                            $icon  = empty($data['icon']) ? self::getIconByFd($frame->fd) : "/{$data['icon']}";
+                            $icon  = empty($data['icon']) ? self::getIconByFd($frame->fd) : $data['icon'];
                             $nick  = empty($data['nick']) ? Randomname::createName() : $data['nick'];
                             $user  = [
                                 'nick' => $nick,
@@ -620,7 +620,7 @@ class Swoole extends Command {
 
                         foreach($serv->connections as $fd) {
                             $serv->push($fd,Kit::json_response($code,'ok',[
-                                'msg'=> date("Y-m-d H:i")." <span style='font-weight: bolder;color: #ff0000'>{$user['nick']}</span> 骚年上线",
+                                'msg'=> date("Y-m-d H:i")." <span style='font-weight: bolder;color: #ff0000'>{$user['nick']}</span> 上线",
                             ]));
                         }
 

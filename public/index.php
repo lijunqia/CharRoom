@@ -14,8 +14,8 @@ header("Content-type:text/html;charset=utf-8");
 define('APP_PATH', __DIR__ . '/../application/');
 define('EXTEND_PATH', __DIR__ .'/../extend/');
 defined('WEB_PATH') or define('WEB_PATH', __DIR__);
-defined('UPLOAD_SYS_PATH') or define('UPLOAD_SYS_PATH', "/Upload/sys");
-defined('UPLOAD_TMP_PATH') or define('UPLOAD_TMP_PATH', "/Upload/tmp");
+defined('UPLOAD_SYS_PATH') or define('UPLOAD_SYS_PATH', "/upload/sys");
+defined('UPLOAD_TMP_PATH') or define('UPLOAD_TMP_PATH', "/upload/tmp");
 
 //定义配置目录
 define('CONF_PATH', APP_PATH.'config/');
