@@ -380,7 +380,7 @@ class Swoole extends Command {
             'pid_file'=> $this->master_pid_file,//kill -SIGUSR1 $(cat server.pid)  重启所有worker进程
             'task_max_request' => 1000,//设置task进程的最大任务数，一个task进程在处理完超过此数值的任务后将自动退出，防止PHP进程内存溢出
             'user'  => 'www',
-            'group' => 'apache',
+            'group' => 'www',
             //'chroot' => '/tmp/root'
             'open_eof_split' => true,
             'package_eof' => "\r\n"
