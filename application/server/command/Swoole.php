@@ -626,7 +626,8 @@ class Swoole extends Command {
 
                         return  true;
 
-                    }  else {
+                    }
+                    else {
                         $info = $serv->getClientInfo($frame->fd);
                         $serv->task(json_encode([
                             'msg'=> $data['msg'],
