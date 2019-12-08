@@ -435,7 +435,8 @@ class Swoole extends Command {
 			$md5    = Cookie::get('md5');
 		}
         if(empty($md5)) {
-//            $sessid = uniqid().mt_rand(100000,999999);
+        	if(!$sessid)
+            $sessid = uniqid().mt_rand(100000,999999);
             $md5    = md5($sessid.self::$md5Key);
             Cookie::clear();
 
