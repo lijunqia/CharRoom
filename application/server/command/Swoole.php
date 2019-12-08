@@ -52,9 +52,9 @@ use think\Cookie;
 
 class Swoole extends Command {
 
-    protected $process_name   = "Swoole_of_chatRoom"; //当前进程名称
-    protected $master_pid_file = '/var/www/charRoom/runtime/swoole_master_pid.txt'; //保存当前进程pid
-    public static $md5Key = "1311552030@qq.com";//自定义一个签名，我这里乱填的
+    protected $process_name   = "Swoole_of_chat"; //当前进程名称
+    protected $master_pid_file = '/www/wwwroot/chat/runtime/swoole_master_pid.txt'; //保存当前进程pid
+    public static $md5Key = "chatkey";//自定义一个签名，我这里乱填的
 
     public static $icons = [
         'https://lovepicture.nosdn.127.net/8814425931195142227?imageView&thumbnail=127y127&quality=85',
@@ -372,7 +372,7 @@ class Swoole extends Command {
             'max_request' => 100,//此参数表示worker进程在处理完n次请求后结束运行，使用Base模式时max_request是无效的
             'backlog' => 128,   //此参数将决定最多同时有多少个待accept的连接，swoole本身accept效率是很高的，基本上不会出现大量排队情况。
             'log_level' => 5,//'https://wiki.swoole.com/wiki/page/538.html
-            'log_file' => '/var/www/charRoom/runtime/log_file.'.date("Ym").'.txt',// 'https://wiki.swoole.com/wiki/page/280.html 仅仅是做运行时错误记录，没有长久存储的必要。
+            'log_file' => '/www/wwwroot/chat/runtime/log_file.'.date("Ym").'.txt',// 'https://wiki.swoole.com/wiki/page/280.html 仅仅是做运行时错误记录，没有长久存储的必要。
             'heartbeat_check_interval' => 30, //每隔多少秒检测一次，单位秒，Swoole会轮询所有TCP连接，将超过心跳时间的连接关闭掉
             'heartbeat_idle_time' => 3600, //TCP连接的最大闲置时间，单位s , 如果某fd最后一次发包距离现在的时间超过heartbeat_idle_time会把这个连接关闭。
             'task_worker_num' => 2,
@@ -465,7 +465,7 @@ class Swoole extends Command {
         if(empty($remote_ip) || in_array($remote_ip,$block_ips)) {
             $serv->push($frame->fd,Kit::json_response(1,'ok',[
                 'msg'  =>'你觉得我该让你登陆吗？',
-                'nick' => 'PHP研究院',
+                'nick' => '聊天室',
                 'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
                 'fd'   =>$frame->fd,
             ]));
@@ -480,7 +480,7 @@ class Swoole extends Command {
             $redis->expire($key,4);
             $serv->push($frame->fd,Kit::json_response(1,'ok',[
                 'msg'  =>'服务器消息：别瞎搞(1)',
-                'nick' => 'PHP研究院',
+                'nick' => '聊天室',
                 'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
                 'fd'   =>$frame->fd,
             ]));
@@ -524,7 +524,7 @@ class Swoole extends Command {
                 $redis->PSETEX($key,300,1);
                 $serv->push($frame->fd,Kit::json_response(1,'ok',[
                     'msg'  =>'服务器消息：别瞎搞(2)',
-                    'nick' => 'PHP研究院',
+                    'nick' => '聊天室',
                     'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
                     'fd'   =>$frame->fd,
                 ]));
@@ -604,57 +604,6 @@ class Swoole extends Command {
 
                         return  true;
 
-                    } elseif($code == 12) { //有无开发者详细信息
-                        $html = " 【拍黄片爱好者】: 77795772 <br/>";
-                        $html .= "【82年的老套路】: 1311552030<br/>";
-                        $html .= "【Clarence】: 851133067<br/>";
-
-                        return $serv->push($frame->fd,Kit::json_response(1,'ok',[
-                            'msg'  =>'核心组成详细信息：<br />' . $html,
-                            'icon' =>"/img/lk.jpg",
-                            'fd'   =>$frame->fd,
-                        ]));
-
-                    } elseif($code == 13) { //有无开发者详细信息
-                        $html = " 由 PHP7 + Mysql + Redis + swoole 实现， 服务器1核1cpu并发能力1.6万左右";
-                        return $serv->push($frame->fd,Kit::json_response(1,'ok',[
-                            'msg'  => $html,
-                            'icon' =>"/img/lk.jpg",
-                            'fd'   =>$frame->fd,
-                        ]));
-
-                    } elseif($code == 14) { //GitHub源码地址
-                        $html = "<a href='https://github.com/lyxlk/CharRoom' target='_blank'>GitHub源码地址 ： https://github.com/lyxlk/CharRoom</a>";
-                        return $serv->push($frame->fd,Kit::json_response(1,'ok',[
-                            'msg'  => $html,
-                            'icon' =>"/img/lk.jpg",
-                            'fd'   =>$frame->fd,
-                        ]));
-
-                    } elseif($code == 15) { //h5棋牌
-                        $html = "<a href='http://www.ivisionsky.com' target='_blank'>H5棋牌 ： http://www.ivisionsky.com</a>";
-                        return $serv->push($frame->fd,Kit::json_response(1,'ok',[
-                            'msg'  => $html,
-                            'icon' =>"/img/lk.jpg",
-                            'fd'   =>$frame->fd,
-                        ]));
-
-                    } elseif($code == 16) { //join
-                        $html = 'come with us ! <br /><img style="width: 45%;height: 45%" src="http://chatroom.ivisionsky.com/img/qun.jpg">';
-                        return $serv->push($frame->fd,Kit::json_response(1,'ok',[
-                            'msg'  => $html,
-                            'icon' =>"/img/lk.jpg",
-                            'fd'   =>$frame->fd,
-                        ]));
-
-                    }  elseif($code == 17) { //join
-                        $html = "<a href='http://go.ivisionsky.com' target='_blank'>Golang新重构聊天室地址 ： http://go.ivisionsky.com</a>";
-                        return $serv->push($frame->fd,Kit::json_response(1,'ok',[
-                            'msg'  => $html,
-                            'icon' =>"/img/lk.jpg",
-                            'fd'   =>$frame->fd,
-                        ]));
-
                     }  else {
                         $info = $serv->getClientInfo($frame->fd);
                         $serv->task(json_encode([
@@ -725,7 +674,7 @@ class Swoole extends Command {
                 if($fd != $_fd) {
                     $serv->push($_fd,Kit::json_response(20,'ok',[
                         'online'=> $count,
-                        'msg'   => date("Y-m-d H:i")." <span style='font-weight: bolder;color: #008bff'>{$user['nick']}</span> 骚年下线了",
+                        'msg'   => date("Y-m-d H:i")." <span style='font-weight: bolder;color: #008bff'>{$user['nick']}</span> 下线了",
                     ]));
                 }
             }
