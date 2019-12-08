@@ -459,9 +459,13 @@ class Swoole extends Command {
     }
 
 	public function getOnlineUsers($serv) {
+		$redis = new RedisPackage([],0);
+		$sessidAndFd = Model_Keys::sessidAndFd();
 		$user = [];
 		foreach($serv->connections as $_fd) {
-			$user[] = $serv->get($_fd);
+			$ret = $redis->hget($sessidAndFd,$_fd);
+			$user    = json_decode($ret,true);
+			$user[] = $user;
 		}
 		return  $user;
 	}

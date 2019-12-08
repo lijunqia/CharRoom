@@ -22,7 +22,7 @@ class Index extends Controller {
 
     public function index() {
 		$request = Request::instance();
-		$sessid=Swoole::getSessid($request->param('sessid'));
+		$sessid = Swoole::getSessid($request->param('sessid'));
         $msg = json_encode([
             'msg'=>"【用户登陆】|CLASS:".__CLASS__."|Func:".__FUNCTION__,
             'fd'=>0,
