@@ -391,8 +391,12 @@
                         success:function(res){
                             layer.closeAll();
                             layer.msg(res.msg);
-                            $.cookie('nick', res.data.nick, { expires: 365, path: '/' });
-                            $.cookie('icon', res.data.icon, { expires: 365, path: '/' });
+                            if(res.status==1)
+                            {
+
+                                $.cookie('nick', res.data.nick, { expires: 365, path: '/' });
+                                $.cookie('icon', res.data.icon, { expires: 365, path: '/' });
+                            }
                         },
                         dataType:"json"
                     })
