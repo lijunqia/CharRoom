@@ -458,41 +458,41 @@
             $(".pnl-hot").hide();
             $(".pnl-rel").show();
             $("#hot-tab").removeClass('active');
-            $.ajax({
-                url:"/index/index/online",
-                type:"post",
-                data:null,
-                processData: false, // 告诉jQuery不要去处理发送的数据
-                contentType: false, // 告诉jQuery不要去设置Content-Type请求头
-                success:function(res){
-                    if(res.status == -1) {
-                        layer.alert(res.msg)
-                    } else {
-                        var li = "";
-                        var self_fd = parseInt($('#fd').val());
-                        $.each(res.data,function (i,v) {
-                            if(self_fd == parseInt(v.fd)) {
-                                var color = '#1E9FFF'
-                            } else {
-                                var color = '#cdcfcf'
-                            }
-                            var nick = v.nick
-                            if( v.nick.length > 12) {
-                                nick = v.nick.slice(0,12) + "...";
-                            }
-
-                            li += '<li class="rel-item" title="'+v.nick+'" style="background-color: '+color+' ;overflow: hidden">';
-                            li += '   <img src="'+v.icon+'" style="float: left;width: 35px;height: 35px;border: 1px solid #6fbff0" />'
-                            li += '   <p style="float: left;line-height: 35px;margin-left: 10px">'+nick+'</p>'
-                            li += '</li>'
-                            li += '<div style="clear: both"></div>'
-                        });
-
-                        $(".pnl-rel .rel-list").empty().append(li);
-                    }
-                },
-                dataType:"json"
-            })
+//            $.ajax({
+//                url:"/index/index/online",
+//                type:"post",
+//                data:null,
+//                processData: false, // 告诉jQuery不要去处理发送的数据
+//                contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+//                success:function(res){
+//                    if(res.status == -1) {
+//                        layer.alert(res.msg)
+//                    } else {
+//                        var li = "";
+//                        var self_fd = parseInt($('#fd').val());
+//                        $.each(res.data,function (i,v) {
+//                            if(self_fd == parseInt(v.fd)) {
+//                                var color = '#1E9FFF'
+//                            } else {
+//                                var color = '#cdcfcf'
+//                            }
+//                            var nick = v.nick
+//                            if( v.nick.length > 12) {
+//                                nick = v.nick.slice(0,12) + "...";
+//                            }
+//
+//                            li += '<li class="rel-item" title="'+v.nick+'" style="background-color: '+color+' ;overflow: hidden">';
+//                            li += '   <img src="'+v.icon+'" style="float: left;width: 35px;height: 35px;border: 1px solid #6fbff0" />'
+//                            li += '   <p style="float: left;line-height: 35px;margin-left: 10px">'+nick+'</p>'
+//                            li += '</li>'
+//                            li += '<div style="clear: both"></div>'
+//                        });
+//
+//                        $(".pnl-rel .rel-list").empty().append(li);
+//                    }
+//                },
+//                dataType:"json"
+//            })
         });
 
             link();
