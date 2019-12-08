@@ -341,6 +341,7 @@ class Swoole extends Command {
                 $this->dangerKill($msg);
             }
         }
+		Cookie::clear();
     }
 
     /**
@@ -421,11 +422,11 @@ class Swoole extends Command {
      * @return mixed
      * 设置唯一标识
      */
-    public static function getSessid() {
+    public static function getSessid($nick) {
         $sessid = Cookie::get('sessid');
         $md5    = Cookie::get('md5');
         if(empty($sessid) || empty($md5)) {
-            $sessid = uniqid().mt_rand(100000,999999);
+            $sessid = $nick;//uniqid().mt_rand(100000,999999);
             $md5    = md5($sessid.self::$md5Key);
             Cookie::clear();
 
@@ -449,12 +450,18 @@ class Swoole extends Command {
         return  intval($count);
     }
 
-	public function getOnlineUsers() {
+	public function getOnlineUsers($serv) {
 		$redis = new RedisPackage([],0);
 		$sessidAndFd = Model_Keys::sessidAndFd();
-		$count       = $redis->HLEN($sessidAndFd);
 
-		return  intval($count);
+		$user = [];
+		foreach($serv->connections as $_fd) {
+			$ukey    = Model_Keys::uinfo($sessidAndFd);
+			$userStr =  $redis->get($ukey);
+			$user    = json_decode($userStr,true);
+			$user[] = $serv->get($_fd);
+		}
+		return  $user;
 	}
 
     /**
@@ -493,7 +500,6 @@ class Swoole extends Command {
                 'fd'   =>$frame->fd,
             ]));
             $serv->close($frame->fd);
-			RedisPackage::clear();
             return false;
         }
         $redis->expire($key,4);
@@ -689,6 +695,7 @@ class Swoole extends Command {
         }
         $redis->hdel($sessidAndFd,$fd);
         $redis->del($ukey);
+		Cookie::clear();
 
         return true;
     }
