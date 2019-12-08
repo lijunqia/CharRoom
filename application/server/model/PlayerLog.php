@@ -96,4 +96,17 @@ class PlayerLog extends Model{
         }
 
     }
+
+
+	public function selectUsers() {
+		try {
+			$sql    = "SELECT * FROM `t_modify_uinfo` WHERE  `status`=1 ORDER BY `id` DESC LIMIT 100";
+			$result = self::query($sql);
+			$aData  = array_pop($result);
+			return [!empty($aData),$aData];
+		} catch (\Exception $e) {
+			print_r($e->getMessage());exit;
+		}
+
+	}
 }

@@ -72,7 +72,7 @@ class asyncTask extends Model {
 	public static function getOnlineUsers() {
 		$PlayerLogObj = self::getDbObj();
 		if($PlayerLogObj) {
-			return $PlayerLogObj->select();
+			return $PlayerLogObj->selectUsers();
 		}
 
 		return false;
