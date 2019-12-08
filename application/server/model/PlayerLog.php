@@ -11,6 +11,7 @@ namespace app\server\model;
 
 use app\index\model\Model_Keys;
 use My\RedisPackage;
+use think\Db;
 use think\Model;
 
 class PlayerLog extends Model{
@@ -98,7 +99,24 @@ class PlayerLog extends Model{
     }
 
 
-	public function selectUsers() {
+	public function getUserByFd($fd) {
+		try {
+			return Db::table('t_modify_uinfo')->where('fd',$fd)->find();
+		} catch (\Exception $e) {
+			print_r($e->getMessage());exit;
+		}
+
+	}
+	public function getUserByNick($nick) {
+		try {
+			return Db::table('t_modify_uinfo')->where('nick',$nick)->find();
+		} catch (\Exception $e) {
+			print_r($e->getMessage());exit;
+		}
+
+	}
+
+	public function getAllUsers() {
 		try {
 			$sql    = "SELECT * FROM `t_modify_uinfo` WHERE add_time>".(time()-3600*24)." ORDER BY `id` DESC LIMIT 100";
 			return self::query($sql);

@@ -253,6 +253,7 @@
                 if( status == 100) {
                     $('#fd').val(data.data.fd);
                     $('.online_users').text(data.data.online);
+                    onlineUser(data.data.users);
                     $('#msgs').append('<div class="msg min time" id="histStart" style="font-weight: bolder;color: #ff0000">'+data.data.msg+'</div>')
                     $('#msgs').append('<div class="msg min time" id="histStart"></div>');
                 } else if(status == -2) {
@@ -276,6 +277,7 @@
                     $("#rel-tab").click();
                 } else if(status == 20) {
                     $('.online_users').text(data.data.online);
+                    onlineUser(data.data.users);
                     if(typeof(data.data.msg) != "undefined" && (data.data.msg != "")) {
                         $('#msgs').append('<div class="msg min time" id="histStart">'+data.data.msg+'</div>');
                         $("#rel-tab").click();
@@ -496,5 +498,29 @@
             link();
     })
 
+    function onlineUser(data) {
+
+        var li = "";
+        var self_fd = parseInt($('#fd').val());
+        $.each(data,function (i,v) {
+            if(self_fd == parseInt(v.fd)) {
+                var color = '#1E9FFF'
+            } else {
+                var color = '#cdcfcf'
+            }
+            var nick = v.nick
+            if( v.nick!='undefined' && v.nick.length > 12) {
+                nick = v.nick.slice(0,12) + "...";
+            }
+
+            li += '<li class="rel-item" title="'+v.nick+'" style="background-color: '+color+' ;overflow: hidden">';
+            li += '   <img src="'+v.icon+'" style="float: left;width: 35px;height: 35px;border: 1px solid #6fbff0" />'
+            li += '   <p style="float: left;line-height: 35px;margin-left: 10px">'+nick+'</p>'
+            li += '</li>'
+            li += '<div style="clear: both"></div>'
+        });
+
+        $(".pnl-rel .rel-list").empty().append(li);
+    }
 </script>
 

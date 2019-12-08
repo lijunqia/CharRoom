@@ -459,14 +459,8 @@ class Swoole extends Command {
     }
 
 	public function getOnlineUsers($serv) {
-		$redis = new RedisPackage([],0);
-		$sessidAndFd = Model_Keys::sessidAndFd();
-
 		$user = [];
 		foreach($serv->connections as $_fd) {
-			$ukey    = Model_Keys::uinfo($sessidAndFd);
-			$userStr =  $redis->get($ukey);
-			$user    = json_decode($userStr,true);
 			$user[] = $serv->get($_fd);
 		}
 		return  $user;
@@ -513,11 +507,13 @@ class Swoole extends Command {
         $redis->expire($key,4);
 
         $count = $this->getOnlineUsersCount() + 1;
+        $users = $this->getOnlineUsers($serv);
 
         $serv->push($frame->fd,Kit::json_response(100,'ok',[
             'icon'   => '',
             'fd'     => $frame->fd,
             'online' => $count,
+            'users'=>$users,
             'msg'    => '系统消息：IP、设备,聊天信息均已被记录，请文明聊天<br />当前在线人数：'.$count
             ]
         ));
@@ -526,6 +522,7 @@ class Swoole extends Command {
             if($fd != $frame->fd) {
                 $serv->push($fd,Kit::json_response(20,'ok',[
                     'online'=> $count,
+					'users'=>$users,
                     'msg'=> '',
                 ]));
             }

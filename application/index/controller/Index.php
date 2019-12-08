@@ -160,7 +160,6 @@ class Index extends Controller {
 				'nick'=>$user['nick'],
 			];
 		}
-
 		echo Kit::json_response(1,'ok',$data);
 
 	}
