@@ -28,4 +28,7 @@ class Model_Keys extends Model {
         return __FUNCTION__;
     }
 
+	public static function remoteIp($ip) {
+		return __FUNCTION__."|{$ip}";
+	}
 }
