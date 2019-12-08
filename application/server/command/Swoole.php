@@ -441,13 +441,21 @@ class Swoole extends Command {
      * @return int
      * 获取在线人数
      */
-    public function getOnlineUsers() {
+    public function getOnlineUsersCount() {
         $redis = new RedisPackage([],0);
         $sessidAndFd = Model_Keys::sessidAndFd();
         $count       = $redis->HLEN($sessidAndFd);
 
         return  intval($count);
     }
+
+	public function getOnlineUsers() {
+		$redis = new RedisPackage([],0);
+		$sessidAndFd = Model_Keys::sessidAndFd();
+		$count       = $redis->HLEN($sessidAndFd);
+
+		return  intval($count);
+	}
 
     /**
      * @param $serv
@@ -485,12 +493,12 @@ class Swoole extends Command {
                 'fd'   =>$frame->fd,
             ]));
             $serv->close($frame->fd);
-
+			RedisPackage::clear();
             return false;
         }
         $redis->expire($key,4);
 
-        $count = $this->getOnlineUsers() + 1;
+        $count = $this->getOnlineUsersCount() + 1;
 
         $serv->push($frame->fd,Kit::json_response(100,'ok',[
             'icon'   => '',
@@ -662,7 +670,7 @@ class Swoole extends Command {
         $sessidAndFd = Model_Keys::sessidAndFd();
         $redis       = new RedisPackage([],$serv->worker_id);
 
-        $count   = $this->getOnlineUsers() - 1;
+        $count   = $this->getOnlineUsersCount() - 1;
         $count   = $count > 0 ? $count : 0;
         $sessid  = $redis->hget($sessidAndFd,$fd);
         $ukey    = Model_Keys::uinfo($sessid);
