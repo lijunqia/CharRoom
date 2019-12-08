@@ -150,6 +150,8 @@ class Index extends Controller {
         }
     }
 	public function online() {
+    	$users = asyncTask::getOnlineUsers();
+    	print_r($users);
 		echo Kit::json_response(1,'ok',[
 			['fd'=> 0,
 			'icon'=> "https://lovepicture.nosdn.127.net/-2938031258272153021?imageView&thumbnail=238y238&quality=85",
