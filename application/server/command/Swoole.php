@@ -379,8 +379,8 @@ class Swoole extends Command {
             'task_worker_num' => 2,
             'pid_file'=> $this->master_pid_file,//kill -SIGUSR1 $(cat server.pid)  重启所有worker进程
             'task_max_request' => 1000,//设置task进程的最大任务数，一个task进程在处理完超过此数值的任务后将自动退出，防止PHP进程内存溢出
-            'user'  => 'apache',
-            'group' => 'apache',
+            'user'  => 'www',
+            'group' => 'www',
             //'chroot' => '/tmp/root'
             'open_eof_split' => true,
             'package_eof' => "\r\n"
@@ -422,11 +422,11 @@ class Swoole extends Command {
      * @return mixed
      * 设置唯一标识
      */
-    public static function getSessid($nick) {
+    public static function getSessid($nick='') {
         $sessid = Cookie::get('sessid');
         $md5    = Cookie::get('md5');
         if(empty($sessid) || empty($md5)) {
-            $sessid = $nick;//uniqid().mt_rand(100000,999999);
+            $sessid = $nick?$nick:uniqid().mt_rand(100000,999999);
             $md5    = md5($sessid.self::$md5Key);
             Cookie::clear();
 
