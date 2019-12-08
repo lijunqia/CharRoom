@@ -382,63 +382,6 @@
             }
         });
 
-        //有无开发者详细信息
-        $('.admin_info').click(function(){
-            layer.load(1);
-            setTimeout(function () {
-                var arr = {code:12, msg: 'question' ,sessid: $.cookie('sessid'),md5:$.cookie('md5')};
-                ws.send( JSON.stringify(arr));
-                layer.closeAll('loading');
-            },1200);
-        });
-        //聊天室如何实现的
-        $('.chatRoom_info').click(function(){
-            layer.load(1);
-            setTimeout(function () {
-                var arr = {code:13, msg: 'question' ,sessid: $.cookie('sessid'),md5:$.cookie('md5')};
-                ws.send( JSON.stringify(arr));
-                layer.closeAll('loading');
-            },1200);
-        });
-
-        //GitHub有源码吗
-        $('.gitHub_code').click(function(){
-            layer.load(1);
-            setTimeout(function () {
-                var arr = {code:14, msg: 'question' ,sessid: $.cookie('sessid'),md5:$.cookie('md5')};
-                ws.send( JSON.stringify(arr));
-                layer.closeAll('loading');
-            },1200);
-        });
-
-        //有H5棋牌游戏地址吗？
-        $('.h5').click(function(){
-            layer.load(1);
-            setTimeout(function () {
-                var arr = {code:15, msg: 'question' ,sessid: $.cookie('sessid'),md5:$.cookie('md5')};
-                ws.send( JSON.stringify(arr));
-                layer.closeAll('loading');
-            },1200);
-        });
-
-        //PHP基础不好可以加群吗？
-        $('.join').click(function(){
-            layer.load(1);
-            setTimeout(function () {
-                var arr = {code:16, msg: 'question' ,sessid: $.cookie('sessid'),md5:$.cookie('md5')};
-                ws.send( JSON.stringify(arr));
-                layer.closeAll('loading');
-            },1200);
-        });
-
-        $('.golang').click(function(){
-            layer.load(1);
-            setTimeout(function () {
-                var arr = {code:17, msg: 'golang' ,sessid: $.cookie('sessid'),md5:$.cookie('md5')};
-                ws.send( JSON.stringify(arr));
-                layer.closeAll('loading');
-            },1200);
-        });
 
         $(document).on('click','.self_info',function () {
             var html = '<form id="userInfo" enctype="multipart/form-data" action="javascript:void(0)" style="padding: 1%;overflow: hidden" >';
