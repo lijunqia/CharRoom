@@ -423,7 +423,8 @@ class Swoole extends Command {
      * 设置唯一标识
      */
     public static function getSessid($sessid='') {
-		$sessid = md5($sessid);
+    	if($sessid)
+			$sessid = md5($sessid);
         if(Cookie::get('sessid')!=$sessid)
 		{
 			$md5 = '';

@@ -22,8 +22,8 @@ class Index extends Controller {
 
     public function index() {
 		$request = Request::instance();
-		Cookie::clear();
-        Swoole::getSessid($request->param('sessid'));
+		$sessid=$request->param('sessid');
+        Swoole::getSessid($sessid);
         $msg = json_encode([
             'msg'=>"【用户登陆】|CLASS:".__CLASS__."|Func:".__FUNCTION__,
             'fd'=>0,
@@ -35,7 +35,9 @@ class Index extends Controller {
     }
 
     public function index2() {
-        Swoole::getSessid();
+		$request = Request::instance();
+		$sessid=$request->param('sessid');
+		$sessid=Swoole::getSessid($sessid);
         $view = new View();
         return $view->fetch('index');
     }
@@ -71,7 +73,8 @@ class Index extends Controller {
 
     public function upload() {
         $redis  = new RedisPackage([],1);
-        $sessid = Swoole::getSessid();
+		$request = Request::instance();
+        $sessid = Swoole::getSessid($request->param('sessid'));
         $ukey   = Model_Keys::uinfo($sessid);
         $userStr = $redis->get($ukey);
         $user    = json_decode($userStr,true);
@@ -103,7 +106,8 @@ class Index extends Controller {
 
     public function modify() {
         $redis  = new RedisPackage([],1);
-        $sessid = Swoole::getSessid();
+		$request = Request::instance();
+		$sessid = Swoole::getSessid($request->param('sessid'));
         $ukey   = Model_Keys::uinfo($sessid);
         $userStr = $redis->get($ukey);
         $user    = json_decode($userStr,true);
