@@ -23,7 +23,7 @@ class Index extends Controller {
     public function index() {
 		$request = Request::instance();
 		Cookie::clear();
-        Swoole::getSessid($request->param('nick'));
+        Swoole::getSessid($request->param('sessid'));
         $msg = json_encode([
             'msg'=>"【用户登陆】|CLASS:".__CLASS__."|Func:".__FUNCTION__,
             'fd'=>0,
