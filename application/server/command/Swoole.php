@@ -615,9 +615,11 @@ class Swoole extends Command {
                         $redis->SETEX($ukey,600,json_encode($user));
                         $redis->hset($sessidAndFd,$frame->fd,$sessid);
 
+						$users = $this->getOnlineUsers($serv);
                         foreach($serv->connections as $fd) {
                             $serv->push($fd,Kit::json_response($code,'ok',[
                                 'msg'=> date("Y-m-d H:i")." <span style='font-weight: bolder;color: #ff0000'>{$user['nick']}</span> 上线",
+								'users'=>$users,
                             ]));
                         }
 
@@ -690,10 +692,12 @@ class Swoole extends Command {
         $user    = json_decode($userStr,true);
 
         if(!empty($user)) {
+			$users = $this->getOnlineUsers($serv);
             foreach($serv->connections as $_fd) {
                 if($fd != $_fd) {
                     $serv->push($_fd,Kit::json_response(20,'ok',[
                         'online'=> $count,
+						'users'=>$users,
                         'msg'   => date("Y-m-d H:i")." <span style='font-weight: bolder;color: #008bff'>{$user['nick']}</span> 下线了",
                     ]));
                 }

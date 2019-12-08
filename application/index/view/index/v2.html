@@ -284,6 +284,7 @@
                     }
                 } else {
                     if(status==1) {
+                        onlineUser(data.data.users);
                         var len = $('#msgs .msg').length
                         if(len > 500) {
                             $('.msgs').empty();
