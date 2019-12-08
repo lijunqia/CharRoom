@@ -522,7 +522,7 @@ class Swoole extends Command {
 
             if(!$redis->SETNX($key,1)) {
                 $redis->PSETEX($key,300,1);
-                $serv->push($frame->fd,Kit::json_response(1,'ok',[
+                $serv->push($frame->fd,Kit::json_response(-2,'ok',[
                     'msg'  =>'服务器消息：别瞎搞(2)',
                     'nick' => '聊天室',
                     'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
@@ -535,7 +535,7 @@ class Swoole extends Command {
                 $data    = json_decode($dataStr,true);
 
                 if(empty($data) || !isset($data['md5']) || !isset($data['sessid']) || !isset($data['msg'])) {
-                    return $serv->push($frame->fd,Kit::json_response(1,'ok',[
+                    return $serv->push($frame->fd,Kit::json_response(-2,'ok',[
                         'msg'  =>'参数错误'.$frame->data,
                         'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
                         'fd'   =>$frame->fd,
@@ -548,7 +548,7 @@ class Swoole extends Command {
 
                 $check = self::md5Check($data['sessid'],$data['md5']);
                 if(!$check) {
-                    return $serv->push($frame->fd,Kit::json_response(1,'ok',[
+                    return $serv->push($frame->fd,Kit::json_response(-2,'ok',[
                         'msg'  =>'服务器消息：别瞎搞(3)',
                         'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
                         'fd'   =>$frame->fd,
@@ -582,7 +582,7 @@ class Swoole extends Command {
                                 'fd'   => $frame->fd,
                             ];
                         } else {
-                            $serv->push($frame->fd,Kit::json_response(1,'ok',[
+                            $serv->push($frame->fd,Kit::json_response(-2,'ok',[
                                 'msg'  =>'服务器消息：请勿重复登陆',
                                 'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
                                 'fd'   =>$frame->fd,
@@ -638,7 +638,7 @@ class Swoole extends Command {
                     }
                 } else {
                     $redis->expire($key,5);
-                    $serv->push($frame->fd,Kit::json_response(1,'ok',[
+                    $serv->push($frame->fd,Kit::json_response(-2,'ok',[
                         'msg'  =>'服务器消息：别瞎搞(4)',
                         'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
                         'fd'   =>$frame->fd,

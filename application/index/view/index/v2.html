@@ -111,27 +111,6 @@
                     </div>
                     <div class="pnl-hot" style="display: block;">
                         <ul class="rel-list unselect" id="hots">
-                            <li class="rel-item">
-                                <a href="javascript:void(0);" onclick="return false;" class="admin_info">有无核心组成员QQ联系方式</a>
-                            </li>
-                            <li class="rel-item">
-                                <a href="javascript:void(0)"  onclick="return false;" class="chatRoom_info">聊天室如何实现的</a>
-                            </li>
-                            <li class="rel-item">
-                                <a href="javascript:void(0)"  onclick="return false;" class="gitHub_code">GitHub有源码吗</a>
-                            </li>
-                            <li class="rel-item">
-                                <a href="javascript:void(0)"  onclick="return false;" class="h5">有H5棋牌游戏地址吗？</a>
-                            </li>
-                            <li class="rel-item">
-                                <a href="http://chatroom.ivisionsky.com/index/index/shake" target="_blank" >看看大家聊过啥？</a>
-                            </li>
-                            <li class="rel-item">
-                                <a href="javascript:void(0)"  onclick="return false;" class="join">PHP基础不好可以加群吗？</a>
-                            </li>
-                            <li class="rel-item">
-                                <a href="javascript:void(0)"  onclick="return false;" class="golang">GoLang新重构聊天室地址</a>
-                            </li>
                         </ul>
                     </div>
                     <div class="pnl-rel" style="display: none;">
@@ -241,6 +220,7 @@
                     nick: $.cookie('nick'),
                     icon: $.cookie('icon')
                 };
+                console.log(arr);
                 ws.send( JSON.stringify(arr));
                 var html = '<div class="msg min time" id="histStart">' +
                     '<span >----- 已成功连接服务器 (点击头像更换信息) -----</span>' +
@@ -267,6 +247,7 @@
                 }
                 var self_fd = parseInt($('#fd').val());
                 var data    = eval('('+event.data+')');
+                console.log(data);
                 var status  = parseInt(data.status);
                 if( status == 100) {
                     $('#fd').val(data.data.fd);
@@ -506,11 +487,9 @@
                 },
                 dataType:"json"
             })
-        })
+        });
 
-        ;(function () {
             link();
-        })()
     })
 
 </script>
