@@ -426,7 +426,6 @@ class Swoole extends Command {
 		$sessid = md5($sessid);
         if(Cookie::get('sessid')!=$sessid)
 		{
-			$sessid = '';
 			$md5 = '';
 		}
 		else
@@ -434,8 +433,8 @@ class Swoole extends Command {
 			$sessid = Cookie::get('sessid');
 			$md5    = Cookie::get('md5');
 		}
-        if(empty($sessid) || empty($md5)) {
-            $sessid = md5($nick);// uniqid().mt_rand(100000,999999);
+        if(empty($md5)) {
+//            $sessid = uniqid().mt_rand(100000,999999);
             $md5    = md5($sessid.self::$md5Key);
             Cookie::clear();
 
