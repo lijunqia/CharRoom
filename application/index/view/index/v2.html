@@ -65,9 +65,9 @@
         </div>
         <div class="abs cover pnl-body" id="pnlBody">
             <input id="fd" value="0" type="hidden">
-            <input id="sessid" value="{$sessid}" type="hidden">
             <form action="" enctype="multipart/form-data" id="uploadform">
                 <input type="file" style="display:none" id='upload' name='img' multiple/>
+                <input id="sessid" value="{$sessid}" type="hidden">
             </form>
             <div class="abs cover pnl-left">
                 <div class="abs cover pnl-msgs scroll" id="show">
@@ -366,7 +366,7 @@
 
         $(document).on('click','.self_info',function () {
             var html = '<form id="userInfo" enctype="multipart/form-data" action="javascript:void(0)" style="padding: 1%;overflow: hidden" >';
-            html += '   <input  name="nick" placeholder="昵称最大15字"  class="layui-input"> <br />';
+            html += '   <input  name="nick" placeholder="昵称最大15字"  class="layui-input"><input id="sessid" value="{$sessid}" type="hidden"> <br />';
             html += '   <input  accept="image/*" value="请选择头像" type="file" name="file" placeholder="请选择头像"  style="cursor: pointer">';
             html += '</form>';
 
