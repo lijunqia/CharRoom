@@ -145,7 +145,7 @@ class Index extends Controller {
                 asyncTask::LogUserInfoToDb($user['fd'],$img,$nick,$ip);
 
                 $redis->SETEX($ukey,600,json_encode($user));
-                echo Kit::json_response(1,'ok',['nick'=>$nick,'icon'=>$img]);
+                echo Kit::json_response(1,'修改成功',['nick'=>$nick,'icon'=>$img]);
             }
         }
     }

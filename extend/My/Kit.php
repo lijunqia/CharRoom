@@ -183,7 +183,7 @@ class Kit {
      */
     public static function debug($string='',$filename='',$opt=FILE_APPEND) {
         $filename = $filename ? $filename : "chart_room";
-        $filename = '/var/www/charRoom/runtime/swoole_debug/'.date("Ymd")."/".$filename.".txt";
+        $filename = '/www/wwwroot/chat/runtime/swoole_debug/'.date("Ymd")."/".$filename.".txt";
         $string   = date("Y-m-d H:i:s")."|".strval($string)."\n\t";
         $dirname  = dirname($filename);
         if(!is_dir($dirname)){
