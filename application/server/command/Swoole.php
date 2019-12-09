@@ -468,7 +468,9 @@ class Swoole extends Command {
 			{
 				$ukey    = Model_Keys::uinfo($sessid);
 				$userStr =  $redis->get($ukey);
-				$user[]    = json_decode($userStr,true);
+				$userStr = json_decode($userStr,true);
+				if($userStr)
+					$user[]    = $userStr;
 			}
 		}
 		return  $user;
