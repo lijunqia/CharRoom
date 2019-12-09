@@ -273,11 +273,11 @@
                         ws.send( JSON.stringify(arr));
                     },1200)
                 } else if(status == 10) {
+                    onlineUser(data.data.users);
                     $('#msgs').append('<div class="msg min time" id="histStart">'+data.data.msg+'</div>');
                     $("#rel-tab").click();
                 } else if(status == 20) {
                     $('.online_users').text(data.data.online);
-                    onlineUser(data.data.users);
                     if(typeof(data.data.msg) != "undefined" && (data.data.msg != "")) {
                         $('#msgs').append('<div class="msg min time" id="histStart">'+data.data.msg+'</div>');
                         $("#rel-tab").click();
@@ -500,6 +500,8 @@
     })
 
     function onlineUser(data) {
+        if(typeof (data)=='undefined')
+            return;
 console.log(data);
         var li = "";
         var self_fd = parseInt($('#fd').val());
