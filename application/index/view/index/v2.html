@@ -256,7 +256,12 @@
                     onlineUser(data.data.users);
                     $('#msgs').append('<div class="msg min time" id="histStart" style="font-weight: bolder;color: #ff0000">'+data.data.msg+'</div>')
                     $('#msgs').append('<div class="msg min time" id="histStart"></div>');
-                } else if(status == -2) {
+                } else if(status == -3) {
+                    layer.msg(data.data.msg, {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                }  else if(status == -2) {
                     layer.msg('长时间未说话，正在重连服务器', {
                         icon: 16
                         ,shade: 0.01
