@@ -500,7 +500,7 @@
     })
 
     function onlineUser(data) {
-
+console.log(data);
         var li = "";
         var self_fd = parseInt($('#fd').val());
         $.each(data,function (i,v) {
@@ -510,7 +510,7 @@
                 var color = '#cdcfcf'
             }
             var nick = v.nick
-            if( v.nick!='undefined' && v.nick.length > 12) {
+            if( typeof(v.nick)!='undefined' && v.nick.length > 12) {
                 nick = v.nick.slice(0,12) + "...";
             }
 
