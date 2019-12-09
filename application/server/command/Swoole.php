@@ -464,6 +464,7 @@ class Swoole extends Command {
 		$user = [];
 		foreach($serv->connections as $_fd) {
 			$ret = $redis->hget($sessidAndFd,$_fd);
+			if($ret)
 			$user[] = $ret;
 		}
 		return  $user;
@@ -499,7 +500,7 @@ class Swoole extends Command {
         if(!$redis->SETNX($key,1)) {
             $redis->expire($key,4);
             $serv->push($frame->fd,Kit::json_response(1,'ok',[
-                'msg'  =>'服务器消息：别瞎搞(1)',
+                'msg'  =>'服务器消息：已在别处登录',
                 'nick' => '聊天室',
                 'icon' =>"http://pics.sc.chinaz.com/Files/pic/icons128/5938/i6.png",
                 'fd'   =>$frame->fd,
@@ -525,7 +526,7 @@ class Swoole extends Command {
             if($fd != $frame->fd) {
                 $serv->push($fd,Kit::json_response(20,'ok',[
                     'online'=> $count,
-					'users'=>$users,
+					'users'=> $users,
                     'msg'=> '',
                 ]));
             }
